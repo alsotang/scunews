@@ -9,6 +9,10 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /start_fetch
+  script: fetch_handler.app
+  login: admin
+
 - url: .*
   script: main.app
 
