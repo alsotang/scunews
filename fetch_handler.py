@@ -3,7 +3,7 @@
 import webapp2
 from google.appengine.api import urlfetch
 from google.appengine.api import taskqueue
-# from google.appengine.ext import deferred
+from google.appengine.ext import ndb
 
 import re, htmlentitydefs
 import json
@@ -41,6 +41,8 @@ def defer_fetch(url, site_id, is_index=False):
         for _url in news_url:
             taskqueue.add(url='/start_fetch', params={'url': _url, 'site_id': site_id})
     else:
+        if is_exsiting(url): return
+
         # contents includes: title, content
         if site_id in ('jwc',):
             result = urlfetch.fetch(url)
@@ -56,7 +58,8 @@ def defer_fetch(url, site_id, is_index=False):
             p = PageContent(url=url, site_id=site_id, title=contents['title'], content=contents['content'])
             p.put()
 
-
+def is_exsiting(url):
+    return PageContent.query(PageContent.url == url).get()
 
 def parse_page(page_content):
     pass
