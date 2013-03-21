@@ -13,6 +13,10 @@ handlers:
   script: fetch_handler.app
   login: admin
 
+- url: /purge_datastore
+  script: purge_datastore.app
+  login: admin
+
 - url: .*
   script: main.app
 
