@@ -33,8 +33,6 @@ class FetchHandler(webapp2.RequestHandler):
 
 
 def defer_fetch(url, site_id, is_index=False):
-    logging.info((url))
-    logging.info((site_id))
 
     site_config = fetch_config[site_id]
     if is_index:
@@ -53,10 +51,8 @@ def defer_fetch(url, site_id, is_index=False):
             result = urlfetch.fetch("http://www.readability.com/api/content/v1/parser?url="\
              + url\
                   + "&token=16208e14fab764c70989011f1f26fc8c71b85451")
-            logging.info(url)
             contents = result.content
             contents = json.loads(contents)
-            logging.info(contents)
             p = PageContent(url=url, site_id=site_id, title=contents['title'], content=contents['content'])
             p.put()
 
@@ -70,7 +66,6 @@ def get_news_urls(site_id, content):
     soup = bs(content)
     urls = soup.findAll('a', href=re.compile(site_config['url_pattern']))
     urls = map(lambda x: urlparse.urljoin(site_config['prefix_url'], x['href']), urls)
-    logging.info(urls)
     return urls
 
 
