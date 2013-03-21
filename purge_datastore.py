@@ -10,5 +10,5 @@ class PurgeDSHandler(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
-    ('/purge_datastore', MainHandler)
+    ('/purge_datastore', PurgeDSHandler)
 ], debug=True)

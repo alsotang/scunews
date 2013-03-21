@@ -9,6 +9,9 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /api/?.*
+  script: api_handler.app
+
 - url: /start_fetch
   script: fetch_handler.app
   login: admin

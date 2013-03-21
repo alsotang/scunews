@@ -55,13 +55,14 @@ def defer_fetch(url, site_id, is_index=False):
                   + "&token=16208e14fab764c70989011f1f26fc8c71b85451")
             contents = result.content
             contents = json.loads(contents)
-            p = PageContent(url=url, site_id=site_id, title=contents['title'], content=contents['content'])
+            p = PageContent(url=url, site_id=site_id, title=contents['title'], content=unescape(contents['content']))
             p.put()
 
 def is_exsiting(url):
     return PageContent.query(PageContent.url == url).get()
 
 def parse_page(page_content):
+    # TODO
     pass
 
 def get_news_urls(site_id, content):
