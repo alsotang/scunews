@@ -1,7 +1,8 @@
-from google.appengine.ext import db
+from google.appengine.ext import ndb
 
-class PageContent(db.Model):
-	site_id = db.StringProperty()
-	url = db.StringProperty()
-	title = db.StringProperty()
-	content = db.TextProperty()
+class PageContent(ndb.Model):
+    site_id = ndb.StringProperty()
+    url = ndb.StringProperty()
+    title = ndb.StringProperty()
+    content = ndb.TextProperty()
+    create_at = ndb.DateProperty(auto_now_add=True)
