@@ -8,13 +8,20 @@ config = {
 		"prefix_url": "http://news.scu.edu.cn",
 		"encoding": "gbk"
 	},
-    # "sw": {
-    #     "site_name": "软件学院",
-    #     "url": "http://sw.scu.edu.cn/",
-    #     "url_pattern": r"^/sw/\w+/\w+/webinfo/\d+/\d+/\d+.htm$",
-    #     "prefix_url": "http://sw.scu.edu.cn/",
-    #     "encoding": "gbk"
-    # },
+    "sw": {
+        "site_name": "软件学院",
+        "url": "http://sw.scu.edu.cn/",
+        "url_pattern": r"/webinfo/",
+        "prefix_url": "http://sw.scu.edu.cn/",
+        "encoding": "gbk"
+    },
+    "cs": {
+        "site_name": "计算机学院",
+        "url": "http://cs.scu.edu.cn/",
+        "url_pattern": r"/webinfo/",
+        "prefix_url": "http://cs.scu.edu.cn/",
+        "encoding": "gbk"
+    },
     "sculj": {
         "site_name": "文新学院",
         "url": "http://www.sculj.cn/Special_News.asp?SpecialID=41&SpecialName=%B1%BE%D5%BE%B5%BC%B6%C1",

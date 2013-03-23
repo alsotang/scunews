@@ -67,7 +67,7 @@ def defer_fetch(url, site_id, is_index=False):
             try:
                 p = PageContent(url=url, site_id=site_id, title=contents['title'], content=unescape(contents['content']))
                 p.put()
-            except KeyError as e:
+            except KeyError as e: # 如果 readability parse 出错
                 logging.error("Error: %s" % e)
                 logging.error("url: %s" % url)
                 logging.error("payload: %s" % payload)
@@ -82,6 +82,11 @@ def parse_page(page_content):
 
 def get_news_urls(site_id, content):
     site_config = fetch_config[site_id]
+
+    # 我知道 [177:] 这个写法很奇葩，可当你看到以下这两个网站的首页的 doctype 标签里面出现中文引号，
+    # 然后紧接着出现两个 html 标签时，就会理解我的无奈了。
+    if site_id in ('sw', 'cs'): content = content[177:]
+
     soup = bs(content)
     urls = soup.findAll('a', href=re.compile(site_config['url_pattern']))
     urls = map(lambda x: urlparse.urljoin(site_config['prefix_url'], x['href']), urls)
