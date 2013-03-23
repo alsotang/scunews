@@ -9,6 +9,7 @@ import re, htmlentitydefs
 import json
 import urlparse
 import logging
+import urllib
 
 from model import PageContent
 import fix_path
@@ -28,13 +29,15 @@ class FetchHandler(webapp2.RequestHandler):
         self.response.write('start fetching...')
     def post(self):
         url, site_id, is_index = self.request.get('url'), self.request.get('site_id'), self.request.get('is_index')
-        logging.info('fetching...%s' % url)
         defer_fetch(url, site_id, is_index)
 
 
 def defer_fetch(url, site_id, is_index=False):
 
+    logging.info('fetching...%s' % url)
+
     site_config = fetch_config[site_id]
+
     if is_index:
         result = urlfetch.fetch(url)
         news_url = get_news_urls(site_id, result.content.decode(site_config["encoding"]).encode('utf-8'))
@@ -48,15 +51,27 @@ def defer_fetch(url, site_id, is_index=False):
             result = urlfetch.fetch(url)
             contents = parse_page(result.content)
         else:
-            # 以下是 readability parser api 的输出示例
+            # 以下是 readability parser api 的输出示例:
             # http://www.readability.com/api/content/v1/parser?url=http://news.scu.edu.cn/news2012/cdzx/webinfo/2013/03/1343288896620954.htm&token=16208e14fab764c70989011f1f26fc8c71b85451
-            result = urlfetch.fetch("http://www.readability.com/api/content/v1/parser?url="\
-             + url\
-                  + "&token=16208e14fab764c70989011f1f26fc8c71b85451")
+
+            # encode 是为了防止 url 包含中文时, 下面的 urlencode 抛错。url 变量默认是 unicode 的。
+            payload = {"url": url.encode(site_config['encoding']), "token": "16208e14fab764c70989011f1f26fc8c71b85451"}
+            payload = urllib.urlencode(payload)
+            result = urlfetch.fetch("http://www.readability.com/api/content/v1/parser",
+                payload=payload,
+                method=urlfetch.POST,
+                headers={'Content-Type': 'application/x-www-form-urlencoded'}
+                )
             contents = result.content
             contents = json.loads(contents)
-            p = PageContent(url=url, site_id=site_id, title=contents['title'], content=unescape(contents['content']))
-            p.put()
+            try:
+                p = PageContent(url=url, site_id=site_id, title=contents['title'], content=unescape(contents['content']))
+                p.put()
+            except KeyError as e:
+                logging.error("Error: %s" % e)
+                logging.error("url: %s" % url)
+                logging.error("payload: %s" % payload)
+                pass
 
 def is_exsiting(url):
     return PageContent.query(PageContent.url == url).get()
