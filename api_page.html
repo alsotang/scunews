@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>{{title}} &middot; 川大新闻聚合</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div class="container-narrow">
+
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li><a href="/">Home</a></li>
+                    <li class="active"><a href="/api">API</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+                <h3 class="muted">{{title}}</h3>
+            </div>
+
+            <hr />
+
+            <h3>使用方法</h3>
+            <pre> # site_id 是站点的名称，count 是获取的数量。返回的数据格式为 JSON。<br /> GET /api/:site_id/:count </pre>
+
+            <p>目前支持的站点如下：</p>
+            <ul>
+                {% for _site_id, site_attrs in fetch_config.iteritems() %}
+                    <li><a href="/api/{{_site_id}}/5" target="_blank">{{_site_id}} {{site_attrs['site_name']}}</a></li>
+                {% endfor %}
+            </ul>
+
+            <hr />
+
+            <h3>数据的返回格式示例</h3>
+            <pre>{
+"url": "http://cs.scu.edu.cn/cs/xsky/xskb/webinfo/2012/10/1343288845106869.htm",
+"content": "报告题目：人工智能与机器学习 ... 2012年10月26日",
+"site_id": "cs",
+"create_at": "2013-03-23",
+"title": "学术报告——人工智能与机器学习-"
+}
+            </pre>
+
+        </div> <!-- /container -->
+
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/main.js"></script>
+    </body>
+</html>

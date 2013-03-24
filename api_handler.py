@@ -1,22 +1,27 @@
 # coding=utf-8
 
 import webapp2
+import jinja2
+import os
 
 import json
 
 from model import PageContent
 from fetch_config import config as fetch_config
 
+jinja_environment = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+
 
 class ApiHandler(webapp2.RequestHandler):
     def get(self, site_id=None, count=None):
         if (not site_id) or (not count):
-            api_page = """<p>scunews API 的使用方法为：</p>
-            <p>GET /api/:site_id/:count ，site_id 是站点的前缀，count 是获取的数量。返回的数据格式为 JSON。目前支持的 sites 如下：</p>
-            """ + ''.join(["<p><a href=\"/api/%s/5\">\
-   _site_id         GET /%s/5</a></p>" % (_site_id, _site_id) for _site_id, site_attrs in fetch_config.iteritems()])
-
-            self.response.write(api_page)
+            template_attrs = {
+                "fetch_config": fetch_config,
+                "title": "API",
+            }
+            api_template = jinja_environment.get_template('api_page.html')
+            self.response.write(api_template.render(template_attrs))
             return
 
         count = int(count)
