@@ -11,9 +11,10 @@ import urlparse
 import logging
 import urllib
 
+import fix_path
 from model import PageContent
-
 from fetch_config import config as fetch_config
+
 
 from BeautifulSoup import BeautifulSoup as bs
 

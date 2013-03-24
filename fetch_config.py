@@ -46,9 +46,9 @@ config = {
     "xsc": {
         "site_name": u"学生工作部",
         "url": "http://xsc.scu.edu.cn/",
-        "url_pattern": r'^News_Detail\.aspx',
+        "url_pattern": r'^/News_Detail\.aspx',
         "prefix_url": "http://xsc.scu.edu.cn/",
-        "encoding": "gb2312"
+        "encoding": "utf-8"
     },
 
 }
