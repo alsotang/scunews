@@ -8,6 +8,7 @@ import json
 
 from model import PageContent
 from fetch_config import config as fetch_config
+import fix_path
 
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))

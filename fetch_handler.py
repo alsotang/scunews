@@ -51,7 +51,7 @@ def defer_fetch(url, site_id, is_index=False):
             contents = parse_page(result.content)
         else:
             # 以下是 readability parser api 的输出示例:
-            # http://www.readability.com/api/content/v1/parser?url=http://news.scu.edu.cn/news2012/cdzx/webinfo/2013/03/1343288896620954.htm&token=16208e14fab764c70989011f1f26fc8c71b85451
+            # http://www.readability.com/api/content/v1/parser?token=16208e14fab764c70989011f1f26fc8c71b85451&url=http://news.scu.edu.cn/news2012/cdzx/webinfo/2013/03/1343288895583976.htm
 
             # encode 是为了防止 url 包含中文时, 下面的 urlencode 抛错。url 变量默认是 unicode 的。
             payload = {"url": url.encode(site_config['encoding']), "token": "16208e14fab764c70989011f1f26fc8c71b85451"}
