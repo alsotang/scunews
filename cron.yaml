@@ -1,0 +1,4 @@
+cron:
+- description: fetching sites of SCU
+  url: /start_fetch
+  schedule: every 2 hours
