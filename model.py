@@ -1,8 +1,5 @@
 from google.appengine.ext import ndb
 
-import json
-import logging
-import time
 
 class PageContent(ndb.Model):
     site_id = ndb.StringProperty()
@@ -22,4 +19,3 @@ class PageContent(ndb.Model):
             "create_at": create_at,
         }
         return j
-
