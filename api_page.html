@@ -10,15 +10,15 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
         <style>
             body {
                 padding-top: 60px;
                 padding-bottom: 40px;
             }
         </style>
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+        <link rel="stylesheet" href="/css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
@@ -38,10 +38,15 @@
                 <h3 class="muted">{{title}}</h3>
             </div>
 
+            {% if error_msg %}
+                <h3 class="text-error">Error</h3>
+               <p class="text-error">{{error_msg}}</p> 
+            {% endif %}
+
             <hr />
 
             <h3>使用方法</h3>
-            <pre> # site_id 是站点的名称，count 是获取的数量。返回的数据格式为 JSON。<br /> GET /api/:site_id/:count </pre>
+            <pre> # site_id 是站点的名称，count 是获取的数量（需 <=10）。返回的数据格式为 JSON。<br /> GET /api/:site_id/:count </pre>
 
             <p>目前支持的站点如下：</p>
             <ul>
@@ -66,10 +71,10 @@
 
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 
-        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="/js/vendor/bootstrap.min.js"></script>
 
-        <script src="js/main.js"></script>
+        <script src="/js/main.js"></script>
     </body>
 </html>

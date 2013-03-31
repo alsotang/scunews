@@ -16,10 +16,11 @@ jinja_environment = jinja2.Environment(
 
 class ApiHandler(webapp2.RequestHandler):
     def get(self, site_id=None, count=None):
-        if (not site_id) or (not count):
+        if (not site_id) or (not count) or (int(count) > 10):
             template_attrs = {
                 "fetch_config": fetch_config,
                 "title": "API",
+                "error_msg": "*count* should smaller than or equal to 10." if count and (int(count) > 10) else None
             }
             api_template = jinja_environment.get_template('api_page.html')
             self.response.write(api_template.render(template_attrs))
