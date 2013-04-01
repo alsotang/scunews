@@ -10,6 +10,8 @@ from model import PageContent
 from fetch_config import config as fetch_config
 import fix_path
 
+fix_path.init()
+
 jinja_environment = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
@@ -27,8 +29,15 @@ class ApiHandler(webapp2.RequestHandler):
             return
 
         count = int(count)
-        results = PageContent.query(PageContent.site_id == site_id).order(PageContent.create_at).fetch(count)
+        results = PageContent.query(PageContent.site_id == site_id)\
+            .order(-PageContent.create_at).fetch(count)
         results = map(lambda x: x.to_json(), results)
+        results = {
+            "pages": results,
+            "count": count,
+            "site_id": site_id,
+        }
+
         results = json.dumps(results, ensure_ascii=False)
         self.response.write(results)
 

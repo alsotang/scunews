@@ -12,6 +12,7 @@ import logging
 import urllib
 
 import fix_path
+fix_path.init()
 from model import PageContent
 from fetch_config import config as fetch_config
 

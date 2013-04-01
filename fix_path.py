@@ -1,4 +1,11 @@
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
+isAppend = False
+
+
+def init():
+    if not isAppend:
+        global isAppend
+        isAppend = True
+        sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
