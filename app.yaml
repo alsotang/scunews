@@ -30,7 +30,8 @@ handlers:
   login: admin
 
 - url: .*
-  script: main.app
+  static_files: index.html
+  upload: index\.html
 
 libraries:
 - name: webapp2
