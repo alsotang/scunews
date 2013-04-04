@@ -20,7 +20,50 @@
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
-    <div class="container">
+
+    <script type="text/x-handlebars">
+      <div class="container">
+        <div class="row">
+          <div class="span2">
+            <ul class="nav nav-pills nav-stacked">
+              {{#each model}}
+                {{#view App.NavListView}}   {{#linkTo 'pages' site_name}} {{site_name}} {{/linkTo}} {{/view}}
+              {{/each}}
+            </ul>
+          </div>
+
+          {{outlet}}
+
+        </div>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="index">
+      <div class="span7">
+        <p>This is Index page.</p>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="pages">
+      <div class="span3">
+        <ul class="nav nav-pills nav-stacked">
+            {{#each controller}} 
+              <li>{{title}}</li>
+            {{/each}}
+        </ul>
+      </div>
+
+      {{outlet}}
+
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="page">
+      <div class="span4">
+        <h2> Hello World! </h2>
+        <p> This is the content.</p>
+      </div>
+    </script>
+<!--     <div class="container">
       <div class="row">
         <div class="span2">
           <ul class="nav nav-pills nav-stacked">
@@ -53,7 +96,7 @@
         </div>
       </div>
     </div>
-
+ -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 
