@@ -6,4 +6,6 @@ The API of this project shows in [https://scunews.appspot.com/api](https://scune
 
 # TODO
 
+Write a frontend for this project.
+
 Improve the accuracy of fetchers.
