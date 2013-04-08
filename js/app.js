@@ -9,10 +9,10 @@ App.PagesController = Ember.ArrayController.extend({
   content: [],
   loadPages: function(view) {
     var _this = this;
+    this.set('content', []);
     App.pageController.switchPage({});
 
     $.getJSON("%@/%@/%@".fmt(App.apiURL, view, App.pageCount), function(results) {
-      _this.set('content', []);
       $.each(results.pages, function(i, page) {
         _this.pushObject(page);
       });
