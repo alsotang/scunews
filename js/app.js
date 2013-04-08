@@ -8,21 +8,32 @@ App.pageCount = '5';
 App.PagesController = Ember.ArrayController.extend({
   content: [],
   loadingWhich: '',
+  cachePages: {},
   loadPages: function(view) {
-    this.set('loadingWhich', view);
     this.set('content', []);
     App.pageController.switchPage({});
 
+    // If pages are cached, return them directly.
+    var _pages = this.get('cachePages')[view];
+    if(_pages) {
+      this.set('content', _pages);
+      App.pageController.switchPage(this.get('content')[0]);
+      return;
+    }
+
+    this.set('loadingWhich', view);
     var _this = this;
     $.getJSON("%@/%@/%@".fmt(App.apiURL, view, App.pageCount), function(results) {
       if(_this.get('loadingWhich') !== view) {
         return;
-      } else {
-        _this.set('loadingWhich', '');
       }
+      _this.set('loadingWhich', '');
+
       $.each(results.pages, function(i, page) {
         _this.pushObject(page);
       });
+
+      _this.get('cachePages')[view] = _this.get('content');
 
       App.pageController.switchPage(_this.get('content')[0]);
     });
