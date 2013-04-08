@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Index &middot; 川大新闻聚合</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+
+    <script type="text/x-handlebars">
+      <div class="container">
+        <div class="row">
+          <div class="span2">
+            <ul class="nav nav-pills nav-stacked">
+
+              {{#each App.sites}}
+                {{#view App.NavListView}}  <a {{action 'loadPages' this target="App.pagesController"}} href='#'>  {{this}} </a> {{/view}}
+              {{/each}}
+
+            </ul>
+          </div>
+
+          <div class="span3">
+            <ul class="nav nav-pills nav-stacked">
+              {{#each App.pagesController}}
+                <li>
+                  <a href='#' {{action 'switchPage' this target="App.pageController"}}>
+                    <h4>{{title}}</h4>
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+
+          <div class="span5">
+            {{#with App.pageController}}
+              <h4>{{title}}</h4>
+              <p>{{{content.content}}}</p>
+            {{/with}}
+          </div>
+        </div>
+      </div>
+    </script>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+    <script src="/js/vendor/bootstrap.min.js"></script>
+    <script src="/js/vendor/handlebars-1.0.0-rc.3.js"></script>
+    <script src="/js/vendor/ember-1.0.0-rc.2.js"></script>
+
+    <script src="/js/app.js"></script>
+  </body>
+</html>
