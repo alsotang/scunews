@@ -1,64 +1,36 @@
 App = Ember.Application.create();
 
-App.Router.map(function() {
-  // put your routes here
-  this.resource("pages", {path: '/:site_name'}, function(){
-    this.resource("page", {path: '/:page_no'});
-  });
-});
+App.sites = ['sw', 'cs', 'news', 'seei'];
 
-
-App.ApplicationRoute = Ember.Route.extend({
-  model: function() {
-    var site_names = [];
-    ['sw', 'cs', 'news'].forEach(function(site_name) {
-      var pages = App.PagesController.create({
-        site_name: site_name
-      });
-      site_names.pushObject(pages);
-    });
-    return site_names;
-  }
-});
-
-App.PagesRoute = Ember.Route.extend({
-  model: function(params) {
-    var content = [];
-    $.getJSON("http://localhost:8080/api/%@1/5".fmt(params.site_name), function(results) {
-      results.pages.forEach(function(news) {
-        var n = App.NewsPage.create({
-          title: news.title,
-          content: news.content,
-          create_at: news.create_at
-        });
-        content.pushObject(n);
-      });
-    });
-    return content;
-  }
-});
+App.apiURL = window.location.href + 'api';
+App.pageCount = '5';
 
 App.PagesController = Ember.ArrayController.extend({
-});
+  content: [],
+  loadPages: function(view) {
+    var _this = this;
+    App.pageController.switchPage({});
 
-App.Pages = Ember.Object.extend({
-  site_name: ''
-});
+    $.getJSON("%@/%@/%@".fmt(App.apiURL, view, App.pageCount), function(results) {
+      _this.set('content', []);
+      $.each(results.pages, function(i, page) {
+        _this.pushObject(page);
+      });
 
-App.NewsPage = Ember.Object.extend({
-  title: null,
-  content: null,
-  create_at: null,
-  intro: function(){
-
+      App.pageController.switchPage(_this.get('content')[0]);
+    });
   }
 });
 
-Ember.Handlebars.registerBoundHelper('highlight', function(value, options) {
-  var escaped = Handlebars.Utils.escapeExpression(value);
-  return new Handlebars.SafeString('<span class="highlight">' + escaped + '</span>');
+App.pagesController = App.PagesController.create();
+
+App.PageController = Ember.ObjectController.extend({
+  switchPage: function(page) {
+    this.set('content', page);
+  }
 });
 
+App.pageController = App.PageController.create();
 
 /* make bootstrap navlist response to link active from Emberjs.*/
 

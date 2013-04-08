@@ -26,77 +26,36 @@
         <div class="row">
           <div class="span2">
             <ul class="nav nav-pills nav-stacked">
-              {{#each model}}
-                {{#view App.NavListView}}   {{#linkTo 'pages' site_name}} {{site_name}} {{/linkTo}} {{/view}}
+
+              {{#each App.sites}}
+                {{#view App.NavListView}}  <a {{action 'loadPages' this target="App.pagesController"}} href='#'>  {{this}} </a> {{/view}}
+              {{/each}}
+
+            </ul>
+          </div>
+
+          <div class="span3">
+            <ul class="nav nav-pills nav-stacked">
+              {{#each App.pagesController}}
+                <li>
+                  <a href='#' {{action 'switchPage' this target="App.pageController"}}>
+                    <h4>{{title}}</h4>
+                  </a>
+                </li>
               {{/each}}
             </ul>
           </div>
 
-          {{outlet}}
-
+          <div class="span5">
+            {{#with App.pageController}}
+              <h4>{{title}}</h4>
+              <p>{{{content.content}}}</p>
+            {{/with}}
+          </div>
         </div>
       </div>
     </script>
 
-    <script type="text/x-handlebars" data-template-name="index">
-      <div class="span7">
-        <p>This is Index page.</p>
-      </div>
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="pages">
-      <div class="span3">
-        <ul class="nav nav-pills nav-stacked">
-            {{#each controller}} 
-              <li>{{title}}</li>
-            {{/each}}
-        </ul>
-      </div>
-
-      {{outlet}}
-
-    </script>
-
-    <script type="text/x-handlebars" data-template-name="page">
-      <div class="span4">
-        <h2> Hello World! </h2>
-        <p> This is the content.</p>
-      </div>
-    </script>
-<!--     <div class="container">
-      <div class="row">
-        <div class="span2">
-          <ul class="nav nav-pills nav-stacked">
-            <li class="active">
-              <a href="#">sw 软件学院</a>
-            </li>
-            <li><a href="#">cs 计算机学院</a></li>
-            <li><a href="#">news 川大新闻网</a></li>
-          </ul>
-        </div>
-        <div class="span3">
-          <ul class="nav nav-pills nav-stacked">
-            <li class="active">
-              <a href="#">          
-                <h2> Hello World! </h2>
-                <p> This is the content.</p>
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <h2> Fuck it! </h2>
-                <p> Yeah! </p>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div class="span4">
-          <h2> Hello World! </h2>
-          <p> This is the content.</p>
-        </div>
-      </div>
-    </div>
- -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
 
